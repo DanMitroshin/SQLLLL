@@ -1,0 +1,137 @@
+CREATE DATABASE LEARNING;
+
+CREATE table PLATFORM (
+  platform_id SERIAL PRIMARY KEY,
+  company_nm VARCHAR(30),
+  owner_nm VARCHAR(20),
+  opening_dt DATE
+);
+
+CREATE TABLE STUDY_COURSE (
+  course_id SERIAL PRIMARY KEY,
+  platform_id INT REFERENCES PLATFORM (platform_id),
+  course_nm VARCHAR(30),
+  author_nm VARCHAR(20),
+  price_amt INT CHECK (price_amt > 0),
+  proven_value_flg BOOLEAN
+);
+
+CREATE TABLE EVENT (
+  event_id SERIAL PRIMARY KEY,
+  event_nm VARCHAR(30),
+  celebrate_dt DATE,
+  holiday_nm VARCHAR(30),
+  city_nm VARCHAR(20)
+);
+
+CREATE TABLE CUSTOMER (
+  customer_id SERIAL PRIMARY KEY,
+  first_nm VARCHAR(15),
+  last_nm VARCHAR(15),
+  middle_nm VARCHAR(15),
+  city_nm VARCHAR(20),
+  phone_no VARCHAR(12) CHECK (phone_no ~'79[0-9]{9}'),
+  email_txt VARCHAR(35),
+  card_level_nm VARCHAR(10),
+  club_member_flg BOOLEAN
+);
+
+CREATE TABLE ORDERING (
+  ordering_id SERIAL PRIMARY KEY,
+  customer_id INT REFERENCES CUSTOMER(customer_id),
+  bill_amt INT CHECK (bill_amt > 0),
+  order_dt DATE
+);
+
+CREATE TABLE EMPLOYEE (
+  employee_id SERIAL PRIMARY KEY,
+  first_nm VARCHAR(15),
+  last_nm VARCHAR(15),
+  middle_nm VARCHAR(15),
+  birth_dt DATE,
+  salary_amt INT CHECK (salary_amt >= 7000),
+  job_position_nm VARCHAR(20)
+);
+
+CREATE TABLE STUDY_COURSE_X_ORDERING (
+  course_id INT REFERENCES STUDY_COURSE(course_id),
+  ordering_id INT REFERENCES ORDERING(ordering_id)
+);
+
+CREATE TABLE STUDY_COURSE_X_EVENT (
+  course_id INT REFERENCES STUDY_COURSE(course_id),
+  event_id INT REFERENCES EVENT(event_id)
+);
+
+CREATE TABLE EVENT_X_CUSTOMER (
+  event_id INT REFERENCES EVENT(event_id),
+  customer_id INT REFERENCES CUSTOMER(customer_id)
+);
+
+CREATE TABLE PLATFORM_X_EMPLOYEE (
+  platform_id INT REFERENCES PLATFORM(platform_id),
+  employee_id INT REFERENCES EMPLOYEE(employee_id)
+);
+
+INSERT INTO PLATFORM(company_nm, owner_nm, opening_dt)
+    VALUES ('GIGANT', 'Рубцовский', '2008-01-02'),
+      ('LIKE CENTER', 'Шабутдинов', '2014-03-25'),
+      ('LIKE ARMY', 'Шепелев', '2012-10-15');
+
+INSERT INTO CUSTOMER(first_nm, last_nm, middle_nm, city_nm, phone_no, email_txt, card_level_nm, club_member_flg)
+    VALUES ('Петя', 'Петров', 'Петрович', 'Москва', '+79163225568', 'petunyasha94@mail.ru', 'standart', FALSE ),
+      ('Вася', 'Васильев', 'Васильевич', 'Волгоград', '+79254675432', 'vasilushka1291@gmail.com', 'platinum', TRUE ),
+      ('Александр', 'Александров', 'Александрович', 'Астрахань', '+79123345690', 'sanyaforever@gmail.com', 'standart', FALSE ),
+      ('Олеся', 'Игнатьева', 'Игоревна', 'Москва', '+79856678998', 'oles777@mail.ru', 'standart', FALSE ),
+      ('Иван', 'Иванько', 'Иванович', 'Амур', '+79163487879', 'ivanzivan98@gmail.ru', 'gold', TRUE ),
+      ('Алена', 'Зарубская', 'Алексеевна', 'Тверь', '+79658889543', 'alenkawork777@mail.ru', 'platinum', TRUE ),
+      ('Игорь', 'Виленкин', 'Максимович', 'Тверь', '+79165783005', 'igorekjokes@mail.ru', 'standart', TRUE ),
+      ('Андрей', 'Коваленко', 'Андреевич', 'Москва', '+79453334567', 'andruha1999@gmail.com', 'standart', FALSE ),
+      ('Екатерина', 'Демидова', 'Владимировна', 'Тамбов', '+79856789001', 'katrin555@mail.ru', 'standart', FALSE ),
+      ('Артем', 'Титов', 'Андреевич', 'Казань', '+79163456160', 'artembest100@gmail.com', 'gold', FALSE ),
+      ('Антон', 'Сургутов', 'Валерьевич', 'Казань', '+79654509896', 'tohagold777@mail.ru', 'standart', FALSE ),
+      ('Вероника', 'Киселева', 'Алексеевна', 'Псков', '+79163454323', 'veronglass@yandex.ru', 'platinum', TRUE );
+
+INSERT INTO EMPLOYEE(first_nm, last_nm, middle_nm, birth_dt, salary_amt, job_position_nm)
+    VALUES ('Петя', 'Иванов', 'Генадьевич', '1970-08-08', '75000', 'teacher'),
+      ('Елизавета', 'Медведева', 'Игоревна', '1989-07-09', '80000', 'manager'),
+      ('Григорий', 'Путин', 'Васильевич', '1986-01-10', '25000', 'creator'),
+      ('Михаил', 'Жириновский', 'Алексеевич', '1989-05-01', '140000', 'teacher'),
+      ('Дмитрий', 'Зюганов', 'Дмитриевич', '1990-07-07', '50000', 'creator'),
+      ('Алина', 'Белая', 'Дмитриевна', '1993-04-25', '45000', 'teacher'),
+      ('Юля', 'Малькута', 'Алексеевна', '1997-03-12', '90000', 'manager');
+
+INSERT INTO EVENT(event_nm, celebrate_dt, holiday_nm, city_nm)
+    VALUES ('Кульминация', '2018-01-15', 'Новый Год', 'Москва'),
+      ('Концентрат', '2018-03-07', '8 марта', 'Москва'),
+      ('Трансофрмация', '2017-09-16', NULL, 'Москва'),
+      ('Масштаб', '2016-05-20', NULL, 'Казань'),
+      ('Казарма', '2016-02-23', '23 февраля', 'Казань'),
+      ('Вперед', '2017-05-09', 'День Победы', 'Москва');
+
+INSERT INTO ORDERING(customer_id, bill_amt, order_dt)
+    VALUES (1, 50000, '2017-09-07');
+
+INSERT INTO ORDERING(customer_id, bill_amt, order_dt)
+    VALUES (1, 30000, '2016-09-08'),
+      (2, 45000, '2017-01-02'),
+      (3, 3000, '2017-03-03'),
+      (3, 10000, '2017-03-04'),
+      (4, 15500, '2016-02-19'),
+      (5, 17000, '2016-03-20'),
+      (6, 12000, '2017-04-05'),
+      (7, 13000, '2017-04-06'),
+      (8, 2000, '2018-01-01'),
+      (9, 5000, '2017-08-10'),
+      (10, 35000, '2018-01-02'),
+      (11, 4000, '2016-08-07'),
+      (11, 15000, '2017-09-02'),
+      (12, 16000, '2018-02-07');
+
+INSERT INTO STUDY_COURSE(platform_id, course_nm, author_nm, price_amt, proven_value_flg)
+    VALUES (2, 'IT', 'Себастьянов', 15000, 1);
+
+SELECT
+  *
+FROM
+  PLATFORM;
