@@ -1,0 +1,82 @@
+/*Посчитать количество людей, работающих в LIKE CENTER*/
+SELECT
+  COUNT(employee_id)
+FROM
+  PLATFORM_X_EMPLOYEE e
+INNER JOIN
+  PLATFORM p
+    ON e.platform_id = p.platform_id
+WHERE company_nm = 'LIKE CENTER';
+
+/*Показать платформы, которые предоставили 3 и более курсов*/
+SELECT
+  company_nm
+FROM
+  PLATFORM P
+INNER JOIN
+  STUDY_COURSE C2
+    ON P.platform_id = C2.platform_id
+GROUP BY company_nm
+HAVING COUNT(C2.course_id) >= 3;
+
+/*Вывести фамилии работников, которые работают в GIGANT*/
+SELECT DISTINCT
+  last_nm
+FROM (
+  SELECT
+    employee_id
+  FROM
+    PLATFORM_X_EMPLOYEE e
+  INNER JOIN
+    PLATFORM p
+      ON e.platform_id = p.platform_id
+  WHERE company_nm = 'GIGANT'
+) AS emg
+LEFT JOIN
+  EMPLOYEE yee
+    ON emg.employee_id = yee.employee_id;
+
+/*Вывести фамилию(-и) и адрес(-а) покупателя(-ей), который(-ые) одним заказом купил(-и) больше всех курсов*/
+SELECT DISTINCT
+  last_nm
+  , email_txt
+FROM (
+  SELECT
+    ordering_id
+  FROM
+    STUDY_COURSE_X_ORDERING
+  GROUP BY ordering_id
+  HAVING
+    COUNT(course_id) = (
+      SELECT
+        MAX(qq)
+      FROM (
+        SELECT
+          COUNT(course_id) AS qq
+        FROM
+          STUDY_COURSE_X_ORDERING
+        GROUP BY
+          ordering_id) AS ct
+    )
+) AS ww
+LEFT JOIN
+  ORDERING od
+    ON ww.ordering_id = od.ordering_id
+LEFT JOIN
+  CUSTOMER C2
+    ON od.customer_id = C2.customer_id;
+
+/*Показать события, которые посещали люди, не являющиеся членами клуба, и которые были после 2017-01-01*/
+SELECT DISTINCT
+  event_nm
+FROM
+  EVENT
+INNER JOIN
+  EVENT_X_CUSTOMER E
+    ON EVENT.event_id = E.event_id
+INNER JOIN
+  CUSTOMER C2
+    ON E.customer_id = C2.customer_id
+WHERE
+  C2.club_member_flg = FALSE
+  AND EVENT.celebrate_dt > '2017-01-01';
