@@ -1,0 +1,165 @@
+INSERT INTO PLATFORM(company_nm, owner_nm, opening_dt)
+    VALUES ('GIGANT', 'Рубцовский', '2008-01-02'),
+      ('LIKE CENTER', 'Шабутдинов', '2014-03-25'),
+      ('LIKE ARMY', 'Шепелев', '2012-10-15');
+
+INSERT INTO CUSTOMER(first_nm, last_nm, middle_nm, city_nm, phone_no, email_txt, card_level_nm, club_member_flg)
+    VALUES ('Петя', 'Петров', 'Петрович', 'Москва', '+79163225568', 'petunyasha94@mail.ru', 'standart', FALSE ),
+      ('Вася', 'Васильев', 'Васильевич', 'Волгоград', '+79254675432', 'vasilushka1291@gmail.com', 'platinum', TRUE ),
+      ('Александр', 'Александров', 'Александрович', 'Астрахань', '+79123345690', 'sanyaforever@gmail.com', 'standart', FALSE ),
+      ('Олеся', 'Игнатьева', 'Игоревна', 'Москва', '+79856678998', 'oles777@mail.ru', 'standart', FALSE ),
+      ('Иван', 'Иванько', 'Иванович', 'Амур', '+79163487879', 'ivanzivan98@gmail.ru', 'gold', TRUE ),
+      ('Алена', 'Зарубская', 'Алексеевна', 'Тверь', '+79658889543', 'alenkawork777@mail.ru', 'platinum', TRUE ),
+      ('Игорь', 'Виленкин', 'Максимович', 'Тверь', '+79165783005', 'igorekjokes@mail.ru', 'standart', TRUE ),
+      ('Андрей', 'Коваленко', 'Андреевич', 'Москва', '+79453334567', 'andruha1999@gmail.com', 'standart', FALSE ),
+      ('Екатерина', 'Демидова', 'Владимировна', 'Тамбов', '+79856789001', 'katrin555@mail.ru', 'standart', FALSE ),
+      ('Артем', 'Титов', 'Андреевич', 'Казань', '+79163456160', 'artembest100@gmail.com', 'gold', FALSE ),
+      ('Антон', 'Сургутов', 'Валерьевич', 'Казань', '+79654509896', 'tohagold777@mail.ru', 'standart', FALSE ),
+      ('Вероника', 'Киселева', 'Алексеевна', 'Псков', '+79163454323', 'veronglass@yandex.ru', 'platinum', TRUE );
+
+INSERT INTO EMPLOYEE(first_nm, last_nm, middle_nm, birth_dt, salary_amt, job_position_nm)
+    VALUES ('Петя', 'Иванов', 'Генадьевич', '1970-08-08', '75000', 'teacher'),
+      ('Елизавета', 'Медведева', 'Игоревна', '1989-07-09', '80000', 'manager'),
+      ('Григорий', 'Путин', 'Васильевич', '1986-01-10', '25000', 'creator'),
+      ('Михаил', 'Жириновский', 'Алексеевич', '1989-05-01', '140000', 'teacher'),
+      ('Дмитрий', 'Зюганов', 'Дмитриевич', '1990-07-07', '50000', 'creator'),
+      ('Алина', 'Белая', 'Дмитриевна', '1993-04-25', '45000', 'teacher'),
+      ('Юля', 'Малькута', 'Алексеевна', '1997-03-12', '90000', 'manager');
+
+INSERT INTO EVENT(event_nm, celebrate_dt, holiday_nm, city_nm)
+    VALUES ('Кульминация', '2018-01-15', 'Новый Год', 'Москва'),
+      ('Концентрат', '2018-03-07', '8 марта', 'Москва'),
+      ('Трансофрмация', '2017-09-16', NULL, 'Москва'),
+      ('Масштаб', '2016-05-20', NULL, 'Казань'),
+      ('Казарма', '2016-02-23', '23 февраля', 'Казань'),
+      ('Вперед', '2017-05-09', 'День Победы', 'Москва');
+
+INSERT INTO ORDERING(customer_id, bill_amt, order_dt)
+    VALUES (1, 50000, '2017-09-07');
+
+INSERT INTO ORDERING(customer_id, bill_amt, order_dt)
+    VALUES (1, 30000, '2016-09-08'),
+      (2, 45000, '2017-01-02'),
+      (3, 3000, '2017-03-03'),
+      (3, 10000, '2017-03-04'),
+      (4, 15500, '2016-02-19'),
+      (5, 17000, '2016-03-20'),
+      (6, 12000, '2017-04-05'),
+      (7, 13000, '2017-04-06'),
+      (8, 2000, '2018-01-01'),
+      (9, 5000, '2017-08-10'),
+      (10, 35000, '2018-01-02'),
+      (11, 4000, '2016-08-07'),
+      (11, 15000, '2017-09-02'),
+      (12, 16000, '2018-02-07');
+
+INSERT INTO STUDY_COURSE(platform_id, course_nm, author_nm, price_amt, proven_value_flg)
+    VALUES (2, 'IT', 'Себастьянов', 15000, TRUE ),
+      (2, 'Decoration', 'Афанасьев', 13000, FALSE ),
+      (3, 'Долина', 'Шабутбинов', 50000, TRUE ),
+      (3, 'Масштабирование', 'Шабутдинов', 70000, TRUE ),
+      (1, 'Эфир', 'Караев', 23500, FALSE ),
+      (3, 'Блог', 'Айратова',  15000, TRUE ),
+      (4, 'Полет', 'Сеченов', 1500, TRUE ),
+      (4, 'На пределе', 'Версаев', 700, FALSE ),
+      (3, 'Запуск', 'Шабутдинов', 15000, TRUE );
+
+INSERT INTO PLATFORM(company_nm, owner_nm, opening_dt)
+    VALUES ('GIG', 'Мамиков', '2009-11-02');
+
+UPDATE PLATFORM
+  SET owner_nm = 'Себастьянов'
+  WHERE company_nm = 'GGG';
+
+UPDATE CUSTOMER
+  SET phone_no = '+79653213221'
+  WHERE phone_no = '+79163454323';
+
+DELETE FROM PLATFORM
+  WHERE company_nm = 'GIG';
+
+INSERT INTO EVENT_X_CUSTOMER (event_id, customer_id)
+    VALUES (1, 3),
+      (1, 7),
+      (1, 10),
+      (2, 2),
+      (2, 7),
+      (2, 8),
+      (2, 9),
+      (3, 3),
+      (3, 4),
+      (3, 2),
+      (4, 2),
+      (4, 7),
+      (4, 9),
+      (4, 10),
+      (4, 11),
+      (5, 1),
+      (6, 2),
+      (6, 5),
+      (6, 7);
+
+INSERT INTO STUDY_COURSE_X_EVENT(course_id, event_id)
+    VALUES (1, 1),
+      (1, 2),
+      (3, 3),
+      (4, 3),
+      (4, 4),
+      (4, 5),
+      (4, 6),
+      (5, 1),
+      (7, 2),
+      (7, 3),
+      (7, 5),
+      (8, 1),
+      (8, 5);
+
+INSERT INTO STUDY_COURSE_X_ORDERING(course_id, ordering_id)
+    VALUES (1, 1),
+      (9, 1),
+      (7, 1),
+      (3, 2),
+      (4, 3),
+      (1, 5),
+      (9, 4),
+      (1, 5),
+      (4, 6),
+      (8, 6),
+      (9, 7),
+      (5, 7),
+      (6, 8),
+      (5, 9),
+      (2, 10),
+      (3, 10),
+      (4, 11),
+      (7, 12),
+      (4, 12),
+      (3, 13),
+      (4, 13),
+      (5, 14),
+      (1, 15);
+
+INSERT INTO PLATFORM_X_EMPLOYEE(platform_id, employee_id)
+    VALUES (1, 2),
+      (1, 4),
+      (1, 6),
+      (2, 2),
+      (2, 3),
+      (2, 4),
+      (3, 1),
+      (3, 5),
+      (3, 6),
+      (3, 7),
+      (4, 1),
+      (4, 5);
+
+
+SELECT
+  *
+FROM
+  PLATFORM;
+
+SELECT
+  phone_no
+FROM
+  CUSTOMER;
