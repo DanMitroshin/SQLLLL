@@ -1,0 +1,74 @@
+CREATE DATABASE LEARNING;
+
+CREATE table PLATFORM (
+  platform_id SERIAL PRIMARY KEY,
+  company_nm VARCHAR(30),
+  owner_nm VARCHAR(20),
+  opening_dt DATE
+);
+
+CREATE TABLE STUDY_COURSE (
+  course_id SERIAL PRIMARY KEY,
+  platform_id INT REFERENCES PLATFORM (platform_id),
+  course_nm VARCHAR(30),
+  author_nm VARCHAR(20),
+  price_amt INT CHECK (price_amt > 0),
+  proven_value_flg BOOLEAN
+);
+
+CREATE TABLE EVENT (
+  event_id SERIAL PRIMARY KEY,
+  event_nm VARCHAR(30),
+  celebrate_dt DATE,
+  holiday_nm VARCHAR(30),
+  city_nm VARCHAR(20)
+);
+
+CREATE TABLE CUSTOMER (
+  customer_id SERIAL PRIMARY KEY,
+  first_nm VARCHAR(15),
+  last_nm VARCHAR(15),
+  middle_nm VARCHAR(15),
+  city_nm VARCHAR(20),
+  phone_no VARCHAR(12) CHECK (phone_no ~'79[0-9]{9}'), /* LIKE '+79[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'*/
+  email_txt VARCHAR(35),
+  card_level_nm VARCHAR(10),
+  club_member_flg BOOLEAN
+);
+
+CREATE TABLE ORDERING (
+  ordering_id SERIAL PRIMARY KEY,
+  customer_id INT REFERENCES CUSTOMER(customer_id),
+  bill_amt INT CHECK (bill_amt > 0),
+  order_dt DATE
+);
+
+CREATE TABLE EMPLOYEE (
+  employee_id SERIAL PRIMARY KEY,
+  first_nm VARCHAR(15),
+  last_nm VARCHAR(15),
+  middle_nm VARCHAR(15),
+  birth_dt DATE,
+  salary_amt INT CHECK (salary_amt >= 7000),
+  job_position_nm VARCHAR(20)
+);
+
+CREATE TABLE STUDY_COURSE_X_ORDERING (
+  course_id INT REFERENCES STUDY_COURSE(course_id),
+  ordering_id INT REFERENCES ORDERING(ordering_id)
+);
+
+CREATE TABLE STUDY_COURSE_X_EVENT (
+  course_id INT REFERENCES STUDY_COURSE(course_id),
+  event_id INT REFERENCES EVENT(event_id)
+);
+
+CREATE TABLE EVENT_X_CUSTOMER (
+  event_id INT REFERENCES EVENT(event_id),
+  customer_id INT REFERENCES CUSTOMER(customer_id)
+);
+
+CREATE TABLE PLATFORM_X_EMPLOYEE (
+  platform_id INT REFERENCES PLATFORM(platform_id),
+  employee_id INT REFERENCES EMPLOYEE(employee_id)
+);
