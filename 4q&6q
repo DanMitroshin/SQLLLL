@@ -153,7 +153,9 @@ INSERT INTO PLATFORM_X_EMPLOYEE(platform_id, employee_id)
       (4, 1),
       (4, 5);
 
-
+DELETE FROM PLATFORM_X_EMPLOYEE
+  WHERE employee_id = 6 AND platform_id = 3;
+  
 SELECT
   *
 FROM
