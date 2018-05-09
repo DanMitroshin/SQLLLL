@@ -1,0 +1,48 @@
+CREATE VIEW orders
+  AS (
+      SELECT
+        first_nm
+        , last_nm
+        , SUBSTRING(phone_no, 1, 8) || '****' AS phone_no
+        , (CASE
+            WHEN
+              bill_amt >= 15000
+              THEN
+                'More than 15000'
+              ELSE
+                'Less than 15000'
+          END) AS bill
+      FROM
+        ORDERING
+      LEFT JOIN
+        CUSTOMER C2
+          ON ORDERING.customer_id = C2.customer_id
+  );
+
+CREATE VIEW club_members_on_events
+  AS (
+      SELECT
+        first_nm
+        , last_nm
+        , middle_nm
+        , '****' || SUBSTRING(email_txt, 5, LENGTH(email_txt)) AS email
+        , event_nm
+        , (CASE
+            WHEN
+              celebrate_dt > '2017-06-23'
+              THEN
+                'Recently'
+              ELSE
+                'Long ago'
+          END) AS celebrate_date
+      FROM
+        EVENT
+      INNER JOIN
+        EVENT_X_CUSTOMER EC
+          ON EVENT.event_id = EC.event_id
+      INNER JOIN
+        CUSTOMER C2
+          ON EC.customer_id = C2.customer_id
+      WHERE
+        club_member_flg = TRUE
+  );
