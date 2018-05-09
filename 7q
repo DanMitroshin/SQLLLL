@@ -1,0 +1,66 @@
+CREATE VIEW phones
+  AS (
+      SELECT
+        first_nm
+        , last_nm
+        , SUBSTRING(phone_no, 1, 8) || '****' AS phone_no
+      FROM
+        CUSTOMER
+      WHERE
+        email_txt NOTNULL
+  );
+
+CREATE VIEW employees
+  AS (
+      SELECT
+        first_nm
+        , last_nm
+        , (CASE
+            WHEN
+              salary_amt >= 70000
+              THEN
+                'Professional'
+              ELSE
+                'Beginner'
+          END) AS status
+      FROM
+        EMPLOYEE
+  );
+
+CREATE VIEW events
+  AS (
+      SELECT
+        event_nm
+        , celebrate_dt
+        , (CASE
+            WHEN
+              holiday_nm NOTNULL
+              THEN
+                'Great holidays'
+              ELSE
+                'Without holidays'
+          END) AS holiday
+      FROM
+        EVENT
+      WHERE
+        celebrate_dt >= '2016-05-06'
+  );
+
+CREATE VIEW companies
+  AS (
+      SELECT
+        company_nm
+        , SUBSTRING(owner_nm, 1, 3) || '###' AS owner
+      FROM
+        PLATFORM
+  );
+
+CREATE VIEW courses
+  AS (
+      SELECT
+        course_nm
+        , price_amt
+        , '***' || SUBSTRING(author_nm, 4, LENGTH(author_nm))
+      FROM
+        STUDY_COURSE
+  );
